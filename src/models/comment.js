@@ -19,7 +19,8 @@ export default class Comment {
     if (Array.isArray(attachments) === false || attachments.legnth === 0) {
       return null;
     }
-    const [{ data: attachment }] = attachments;
+    const [{ data }] = attachments;
+    const [attachment] = data;
     if (attachment.external_context != null) {
       return {
         url: attachment.external_context.url,
@@ -33,7 +34,7 @@ export default class Comment {
     }
   }
 
-  attachments = [];
+  attachment = null;
   author = '';
   comment = '';
   group = null;
@@ -50,7 +51,7 @@ export default class Comment {
       this.comment = comment;
       this.group = group;
     }
-    this.attachments = Comment.parseAttachments(attachments);
+    this.attachment = Comment.parseAttachments(attachments);
     this.time = new Date(timestamp * 1000);
     this.title = title;
   }

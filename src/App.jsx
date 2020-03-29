@@ -4,10 +4,10 @@ import './App.css';
 import { AppContext } from './AppContext'
 import UploadButtons from './components/file-upload'
 import CommentList from './components/comment-list';
+import { Grid } from '@material-ui/core';
 
 function App() {
   const [data, setData] = React.useState({});
-  console.log(data)
   return (
     <AppContext.Provider value={{
       data,
@@ -18,7 +18,11 @@ function App() {
           <img src={logo} className="App-logo" alt="logo" />
           <UploadButtons />
         </header> : <main>
-            <CommentList comments={data.comments} />
+            <Grid container>
+              <Grid item lg={3}>
+                <CommentList comments={data.comments} />
+              </Grid>
+            </Grid>
           </main>}
       </div>
     </AppContext.Provider>

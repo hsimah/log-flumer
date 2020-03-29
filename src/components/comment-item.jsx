@@ -3,12 +3,12 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import React from 'react';
+import { ReactTinyLink } from 'react-tiny-link';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -62,12 +62,13 @@ export default function CommentItem(props) {
       title={title}
       subheader={time.toDateString()}
     />
-    {attachment != null &&
-      <CardMedia
-        className={classes.media}
-        image={attachment.url}
-        title={attachment.title || 'Attachment'}
-      />}
+    {attachment != null && <ReactTinyLink
+      cardSize="small"
+      showGraphic={true}
+      maxLine={2}
+      minLine={1}
+      url={attachment.url}
+    />}
     <CardContent>
       {group != null && (
         <Typography variant='body2' color='textSecondary' component='p'>

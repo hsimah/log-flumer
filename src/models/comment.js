@@ -40,15 +40,17 @@ export default class Comment {
     const [{ data }] = attachments;
     const [attachment] = data;
     if (attachment.external_context != null) {
-      return {
-        url: attachment.external_context.url,
-      };
+      return attachment.external_context.url.startsWith('photos_and_videos') ?
+        null : {
+          url: attachment.external_context.url,
+        };
     }
     if (attachment.media != null) {
-      return {
-        url: attachment.media.uri,
-        title: attachment.media.title,
-      };
+      return attachment.media.uri.startsWith('photos_and_videos') ?
+        null : {
+          url: attachment.media.uri,
+          title: attachment.media.title,
+        };
     }
   }
 

@@ -1,7 +1,7 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { AppContext } from '../AppContext'
+import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { AppContext } from '../AppContext';
 import Comment from '../models/comment';
 
 const useStyles = makeStyles(theme => ({
@@ -31,9 +31,12 @@ export default function UploadButtons() {
     reader.addEventListener('load', () => {
       const json = JSON.parse(reader.result);
       if (Comment.isComment(json)) {
+        const { comments, groups } = Comment.parseComments(json);
         setData({
+          comments,
+          current: comments,
+          groups: Array.from(groups),
           type: 'comment',
-          comments: json.comments
         });
         return;
       }

@@ -1,10 +1,11 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { AppContext } from './AppContext'
-import UploadButtons from './components/file-upload'
-import CommentList from './components/comment-list';
 import { Grid } from '@material-ui/core';
+import React from 'react';
+import './App.css';
+import { AppContext } from './AppContext';
+import CommentList from './components/comment-list';
+import UploadButtons from './components/file-upload';
+import PowerFilter from './components/power-filter';
+import logo from './logo.svg';
 
 function App() {
   const [data, setData] = React.useState({});
@@ -19,8 +20,11 @@ function App() {
           <UploadButtons />
         </header> : <main>
             <Grid container>
-              <Grid item lg={3}>
-                <CommentList comments={data.comments} />
+              <Grid item xs={12}>
+                <PowerFilter />
+              </Grid>
+              <Grid item xs={12}>
+                <CommentList comments={data.current} />
               </Grid>
             </Grid>
           </main>}

@@ -15,6 +15,24 @@ export default class Comment {
     return false;
   }
 
+  static parseComments(data) {
+    if (Comment.isComment(data) === false) {
+      throw new Error('invalid comment log');
+    }
+    const { comments } = data;
+    return comments.reduce((a, c) => {
+      const comment = new Comment(c);
+      a.comments.push(comment);
+      if (comment.group != null && a.groups.has(comment.group) !== true) {
+        a.groups.add(comment.group);
+      }
+      return a;
+    }, {
+      comments: [],
+      groups: new Set(),
+    });
+  }
+
   static parseAttachments(attachments) {
     if (Array.isArray(attachments) === false || attachments.legnth === 0) {
       return null;

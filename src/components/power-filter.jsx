@@ -1,91 +1,82 @@
-import Chip from '@material-ui/core/Chip';
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import React from 'react';
 import { AppContext } from '../AppContext';
+import { makeStyles, fade } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-    maxWidth: 300,
+  grow: {
+    flexGrow: 1,
   },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
+  inputContainer: {
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginLeft: theme.spacing(3),
+    width: 'auto',
   },
-  chip: {
-    margin: 2,
+  inputLabel: {
+    color: fade(theme.palette.common.white, 0.54),
   },
-  noLabel: {
-    marginTop: theme.spacing(3),
+  input: {
+    '&:before': {
+      borderBottomColor: fade(theme.palette.common.white, 0.54),
+      '&:hover': {
+        borderBottom: '1px solid white'
+      }
+    },
+    '&:hover': {
+      border: 'none'
+    }
   },
 }));
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-function getStyles(groupName, groups, theme) {
-  return {
-    fontWeight:
-      groups.indexOf(groupName) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
 
 export default function PowerFilter() {
   const { data: { comments, groups }, setData } = React.useContext(AppContext);
   const classes = useStyles();
-  const theme = useTheme();
-  const [selectedGroups, setSelectedGroups] = React.useState([]);
 
-  const handleChange = ({ target: { value } }) => {
-
-    setSelectedGroups(value);
-    setData(data => ({
-      ...data,
-      current: comments.filter(c => value.includes(c.group)),
-    }));
-  };
-
-  return (
-    <div>
-      <FormControl className={classes.formControl}>
-        <InputLabel>{'Groups'}</InputLabel>
-        <Select
-          multiple
-          value={selectedGroups}
-          onChange={handleChange}
-          input={<Input />}
-          renderValue={(selected) => (
-            <div className={classes.chips}>
-              {selected.map((value) => <Chip key={value} label={value} className={classes.chip} />)}
-            </div>
-          )}
-          MenuProps={MenuProps}
-        >
-          {groups.map((name) => <MenuItem
-            key={name}
-            value={name}
-            style={getStyles(name, selectedGroups, theme)}
-          >
-            {name}
-          </MenuItem>)}
-        </Select>
-      </FormControl>
-    </div>
-  );
+  return <div className={classes.grow}>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography className={classes.title} variant="h6" noWrap>
+          {'Log Flumer'}
+        </Typography>
+        <div className={classes.inputContainer}>
+          <TextField
+            label='Search'
+            variant='filled'
+            InputProps={{
+              className: classes.input
+            }}
+            InputLabelProps={{ className: classes.inputLabel }} />
+        </div>
+        <div className={classes.inputContainer}>
+          <Autocomplete
+            multiple
+            options={groups}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                InputLabelProps={{
+                  ...params.InputProps,
+                  className: classes.inputLabel
+                }}
+                InputProps={{
+                  className: classes.input
+                }}
+                variant='filled'
+                label='Groups'
+              />
+            )}
+          />
+        </div>
+      </Toolbar>
+    </AppBar>
+  </div>
 }

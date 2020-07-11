@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { AppContext } from '../AppContext';
 import Comment from '../models/comment';
+import InstagramMessages from '../models/instagram/messages';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,6 +38,13 @@ export default function UploadButtons() {
           current: comments,
           groups: Array.from(groups),
           type: 'comment',
+        });
+        return;
+      }
+      if (InstagramMessages.isMessages(json)) {
+        setData({
+          conversations: json,
+          type: 'ig-messages'
         });
         return;
       }

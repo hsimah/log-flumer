@@ -1,6 +1,5 @@
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,17 +16,17 @@ const useStyles = makeStyles(theme => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%" // 16:9
+    paddingTop: '56.25%' // 16:9
   },
   expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest
     })
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: 'rotate(180deg)'
   },
   avatar: {
     backgroundColor: 'red'
@@ -63,7 +62,7 @@ export default function CommentItem(props) {
       subheader={time.toDateString()}
     />
     {attachment != null && <ReactTinyLink
-      cardSize="small"
+      cardSize='small'
       showGraphic={true}
       maxLine={2}
       minLine={1}
@@ -79,8 +78,5 @@ export default function CommentItem(props) {
         {comment}
       </Typography>
     </CardContent>
-    <CardActions disableSpacing>
-
-    </CardActions>
   </Card>
 }
